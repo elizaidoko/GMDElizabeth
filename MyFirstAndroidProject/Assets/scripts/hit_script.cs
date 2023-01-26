@@ -15,8 +15,9 @@ public class hit_script : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.touchCount > 0)
+        if (Input.touchCount > 0) //if first finger is on screen
         {
+
             Touch[] myTouches = Input.touches;
             Touch myFirstTouch = myTouches[0];
             print(myFirstTouch.position);
@@ -24,6 +25,7 @@ public class hit_script : MonoBehaviour
             switch (myFirstTouch.phase)
             {
                 case TouchPhase.Began:
+
                     timer = 0;
                     break;
 
@@ -32,12 +34,21 @@ public class hit_script : MonoBehaviour
 
                 case TouchPhase.Moved:
                     //try making it move with finger
+                    Ray ray = Camera.main.ScreenPointToRay(myFirstTouch.position);
+                    RaycastHit hit;
+                    if (Physics.Raycast(ray, out hit))
+                    {
+                        Itouchable touched_object = hit.transform.GetComponent<Itouchable>();
+
+                        float distance = Vector3.Distance(Camera.main.transform.position, hit.transform.position);
+                    }
                     hasMoved = true;
                     break;
 
                 case TouchPhase.Ended:
                     if(timer < 1 && !hasMoved)
                     {
+                        hasMoved = true;
                         Ray myRay = Camera.main.ScreenPointToRay(myFirstTouch.position);
                         Debug.DrawRay(myRay.origin, 15 * myRay.direction);
                         RaycastHit hitInfo;
@@ -60,6 +71,7 @@ public class hit_script : MonoBehaviour
 
                     break;
             }
+
             
 
             

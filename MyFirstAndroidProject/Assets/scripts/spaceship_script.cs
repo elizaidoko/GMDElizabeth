@@ -6,6 +6,7 @@ using UnityEngine;
 public class spaceship_script : MonoBehaviour, Itouchable
 {
     Vector3 acceleration, velocity;
+    
     // Start is called before the first frame update
     void Start()
     {
